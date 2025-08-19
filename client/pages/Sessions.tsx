@@ -120,10 +120,10 @@ export default function Sessions() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/40 bg-card/60 backdrop-blur">
-        <div className="container mx-auto px-4 py-4">
+    <div className="bg-background">
+      {/* Page Header */}
+      <div className="border-b border-border/40 bg-card/60">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-foreground">Crawl Sessions</h1>
@@ -137,7 +137,7 @@ export default function Sessions() {
             </Link>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Sessions Overview */}
