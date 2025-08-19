@@ -90,36 +90,7 @@ export default function Index() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/40 bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <Activity className="h-6 w-6 text-primary" />
-                </div>
-                <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full animate-pulse" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">WebSpider Pro</h1>
-                <p className="text-sm text-muted-foreground">The most powerful web crawler</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                <Activity className="h-3 w-3 mr-1" />
-                Enterprise
-              </Badge>
-              <Button variant="outline" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Settings
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="bg-background">
 
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Stats Grid */}
