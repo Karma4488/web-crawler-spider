@@ -133,7 +133,7 @@ interface CrawlConfig {
 // ❌ Bad
 const config: any = {
   url: "example.com",
-  depth: 5
+  depth: 5,
 };
 ```
 
@@ -186,7 +186,7 @@ export function Button({ variant, onClick, children }: ButtonProps) {
 
 ```typescript
 // ✅ Good
-app.post('/api/crawl/start', validateCrawlConfig, async (req, res) => {
+app.post("/api/crawl/start", validateCrawlConfig, async (req, res) => {
   try {
     const result = await startCrawl(req.body);
     res.status(201).json({ success: true, data: result });
@@ -230,14 +230,14 @@ describe('Button', () => {
 
 ```typescript
 // API endpoint testing
-describe('POST /api/crawl/start', () => {
-  it('should start a new crawl with valid config', async () => {
-    const config = { url: 'https://example.com', maxDepth: [3] };
+describe("POST /api/crawl/start", () => {
+  it("should start a new crawl with valid config", async () => {
+    const config = { url: "https://example.com", maxDepth: [3] };
     const response = await request(app)
-      .post('/api/crawl/start')
+      .post("/api/crawl/start")
       .send(config)
       .expect(201);
-    
+
     expect(response.body.success).toBe(true);
     expect(response.body.sessionId).toBeDefined();
   });
@@ -265,23 +265,28 @@ describe('POST /api/crawl/start', () => {
 
 ```markdown
 ## Description
+
 Brief description of changes made.
 
 ## Type of Change
+
 - [ ] Bug fix (non-breaking change)
 - [ ] New feature (non-breaking change)
 - [ ] Breaking change (fix or feature causing existing functionality to change)
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] I have added tests for my changes
 - [ ] All new and existing tests pass
 - [ ] I have tested this change manually
 
 ## Screenshots (if applicable)
+
 Include screenshots for UI changes.
 
 ## Checklist
+
 - [ ] My code follows the project's coding standards
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code where necessary
@@ -315,6 +320,7 @@ A clear description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -327,6 +333,7 @@ A clear description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment**
+
 - OS: [e.g. Windows 10, macOS 12.0, Ubuntu 20.04]
 - Node.js version: [e.g. 18.17.0]
 - Browser: [e.g. Chrome 115, Firefox 116]
@@ -369,6 +376,7 @@ Add any other context, mockups, or examples about the feature request.
 We're particularly interested in contributions in these areas:
 
 ### High Priority
+
 - **Performance optimizations** for large-scale crawling
 - **Additional export formats** (Parquet, Avro, etc.)
 - **Advanced filtering options** (content-based filtering)
@@ -376,6 +384,7 @@ We're particularly interested in contributions in these areas:
 - **Better error handling** and retry mechanisms
 
 ### Medium Priority
+
 - **UI/UX improvements** and accessibility
 - **Additional chart types** and visualizations
 - **Crawler scheduling** and automation
@@ -383,6 +392,7 @@ We're particularly interested in contributions in these areas:
 - **Documentation improvements**
 
 ### Low Priority
+
 - **Mobile app** support
 - **Cloud deployment** guides
 - **Advanced authentication** options

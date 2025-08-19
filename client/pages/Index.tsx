@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { 
-  Activity, 
-  Globe, 
-  Zap, 
-  Database, 
-  Shield, 
-  Target, 
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Activity,
+  Globe,
+  Zap,
+  Database,
+  Shield,
+  Target,
   Settings,
   Play,
   Pause,
@@ -28,8 +40,8 @@ import {
   Code,
   FileText,
   Image,
-  Video
-} from 'lucide-react';
+  Video,
+} from "lucide-react";
 
 interface CrawlConfig {
   url: string;
@@ -48,18 +60,18 @@ interface CrawlConfig {
 
 export default function Index() {
   const [crawlConfig, setCrawlConfig] = useState<CrawlConfig>({
-    url: '',
+    url: "",
     maxDepth: [3],
     maxPages: [100],
     concurrent: [5],
     delay: [1000],
     followExternal: false,
     respectRobots: true,
-    userAgent: 'WebSpider Pro 1.0',
+    userAgent: "WebSpider Pro 1.0",
     timeout: [30],
-    fileTypes: ['html', 'pdf', 'doc'],
-    excludePatterns: '',
-    includePatterns: ''
+    fileTypes: ["html", "pdf", "doc"],
+    excludePatterns: "",
+    includePatterns: "",
   });
 
   const [isRunning, setIsRunning] = useState(false);
@@ -68,30 +80,34 @@ export default function Index() {
   const handleStartCrawl = async () => {
     setIsRunning(true);
     try {
-      const response = await fetch('/api/crawl/start', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(crawlConfig)
+      const response = await fetch("/api/crawl/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(crawlConfig),
       });
       const data = await response.json();
       setResults(data);
     } catch (error) {
-      console.error('Crawl failed:', error);
+      console.error("Crawl failed:", error);
     } finally {
       setIsRunning(false);
     }
   };
 
   const stats = [
-    { label: 'Pages Crawled', value: '12,543', icon: Globe, trend: '+15%' },
-    { label: 'Links Found', value: '48,291', icon: Link, trend: '+8%' },
-    { label: 'Data Extracted', value: '2.4GB', icon: Database, trend: '+22%' },
-    { label: 'Active Threads', value: crawlConfig.concurrent[0].toString(), icon: Zap, trend: 'Live' }
+    { label: "Pages Crawled", value: "12,543", icon: Globe, trend: "+15%" },
+    { label: "Links Found", value: "48,291", icon: Link, trend: "+8%" },
+    { label: "Data Extracted", value: "2.4GB", icon: Database, trend: "+22%" },
+    {
+      label: "Active Threads",
+      value: crawlConfig.concurrent[0].toString(),
+      icon: Zap,
+      trend: "Live",
+    },
   ];
 
   return (
     <div className="bg-background">
-
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -100,9 +116,15 @@ export default function Index() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
-                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-primary font-medium">{stat.trend}</p>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-bold text-foreground">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs text-primary font-medium">
+                      {stat.trend}
+                    </p>
                   </div>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <stat.icon className="h-6 w-6 text-primary" />
@@ -146,7 +168,12 @@ export default function Index() {
                           id="url"
                           placeholder="https://example.com"
                           value={crawlConfig.url}
-                          onChange={(e) => setCrawlConfig({...crawlConfig, url: e.target.value})}
+                          onChange={(e) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              url: e.target.value,
+                            })
+                          }
                           className="pl-10"
                         />
                       </div>
@@ -154,10 +181,14 @@ export default function Index() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label>Max Crawl Depth: {crawlConfig.maxDepth[0]}</Label>
+                        <Label>
+                          Max Crawl Depth: {crawlConfig.maxDepth[0]}
+                        </Label>
                         <Slider
                           value={crawlConfig.maxDepth}
-                          onValueChange={(value) => setCrawlConfig({...crawlConfig, maxDepth: value})}
+                          onValueChange={(value) =>
+                            setCrawlConfig({ ...crawlConfig, maxDepth: value })
+                          }
                           max={10}
                           min={1}
                           step={1}
@@ -169,7 +200,9 @@ export default function Index() {
                         <Label>Max Pages: {crawlConfig.maxPages[0]}</Label>
                         <Slider
                           value={crawlConfig.maxPages}
-                          onValueChange={(value) => setCrawlConfig({...crawlConfig, maxPages: value})}
+                          onValueChange={(value) =>
+                            setCrawlConfig({ ...crawlConfig, maxPages: value })
+                          }
                           max={10000}
                           min={10}
                           step={10}
@@ -178,10 +211,17 @@ export default function Index() {
                       </div>
 
                       <div className="space-y-2">
-                        <Label>Concurrent Requests: {crawlConfig.concurrent[0]}</Label>
+                        <Label>
+                          Concurrent Requests: {crawlConfig.concurrent[0]}
+                        </Label>
                         <Slider
                           value={crawlConfig.concurrent}
-                          onValueChange={(value) => setCrawlConfig({...crawlConfig, concurrent: value})}
+                          onValueChange={(value) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              concurrent: value,
+                            })
+                          }
                           max={20}
                           min={1}
                           step={1}
@@ -193,7 +233,9 @@ export default function Index() {
                         <Label>Delay (ms): {crawlConfig.delay[0]}</Label>
                         <Slider
                           value={crawlConfig.delay}
-                          onValueChange={(value) => setCrawlConfig({...crawlConfig, delay: value})}
+                          onValueChange={(value) =>
+                            setCrawlConfig({ ...crawlConfig, delay: value })
+                          }
                           max={5000}
                           min={0}
                           step={100}
@@ -207,7 +249,12 @@ export default function Index() {
                         <Switch
                           id="external"
                           checked={crawlConfig.followExternal}
-                          onCheckedChange={(checked) => setCrawlConfig({...crawlConfig, followExternal: checked})}
+                          onCheckedChange={(checked) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              followExternal: checked,
+                            })
+                          }
                         />
                         <Label htmlFor="external">Follow External Links</Label>
                       </div>
@@ -216,7 +263,12 @@ export default function Index() {
                         <Switch
                           id="robots"
                           checked={crawlConfig.respectRobots}
-                          onCheckedChange={(checked) => setCrawlConfig({...crawlConfig, respectRobots: checked})}
+                          onCheckedChange={(checked) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              respectRobots: checked,
+                            })
+                          }
                         />
                         <Label htmlFor="robots">Respect robots.txt</Label>
                       </div>
@@ -230,15 +282,24 @@ export default function Index() {
                         <Input
                           id="userAgent"
                           value={crawlConfig.userAgent}
-                          onChange={(e) => setCrawlConfig({...crawlConfig, userAgent: e.target.value})}
+                          onChange={(e) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              userAgent: e.target.value,
+                            })
+                          }
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label>Request Timeout: {crawlConfig.timeout[0]}s</Label>
+                        <Label>
+                          Request Timeout: {crawlConfig.timeout[0]}s
+                        </Label>
                         <Slider
                           value={crawlConfig.timeout}
-                          onValueChange={(value) => setCrawlConfig({...crawlConfig, timeout: value})}
+                          onValueChange={(value) =>
+                            setCrawlConfig({ ...crawlConfig, timeout: value })
+                          }
                           max={120}
                           min={5}
                           step={5}
@@ -249,16 +310,36 @@ export default function Index() {
                       <div className="space-y-2">
                         <Label>File Types to Crawl</Label>
                         <div className="flex flex-wrap gap-2">
-                          {['html', 'pdf', 'doc', 'docx', 'txt', 'xml', 'json', 'csv'].map((type) => (
+                          {[
+                            "html",
+                            "pdf",
+                            "doc",
+                            "docx",
+                            "txt",
+                            "xml",
+                            "json",
+                            "csv",
+                          ].map((type) => (
                             <Badge
                               key={type}
-                              variant={crawlConfig.fileTypes.includes(type) ? "default" : "outline"}
+                              variant={
+                                crawlConfig.fileTypes.includes(type)
+                                  ? "default"
+                                  : "outline"
+                              }
                               className="cursor-pointer"
                               onClick={() => {
-                                const newTypes = crawlConfig.fileTypes.includes(type)
-                                  ? crawlConfig.fileTypes.filter(t => t !== type)
+                                const newTypes = crawlConfig.fileTypes.includes(
+                                  type,
+                                )
+                                  ? crawlConfig.fileTypes.filter(
+                                      (t) => t !== type,
+                                    )
                                   : [...crawlConfig.fileTypes, type];
-                                setCrawlConfig({...crawlConfig, fileTypes: newTypes});
+                                setCrawlConfig({
+                                  ...crawlConfig,
+                                  fileTypes: newTypes,
+                                });
                               }}
                             >
                               {type}
@@ -272,23 +353,37 @@ export default function Index() {
                   <TabsContent value="filters" className="space-y-6 mt-6">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="include">Include Patterns (regex)</Label>
+                        <Label htmlFor="include">
+                          Include Patterns (regex)
+                        </Label>
                         <Textarea
                           id="include"
                           placeholder=".*\\.html$&#10;.*product.*&#10;.*article.*"
                           value={crawlConfig.includePatterns}
-                          onChange={(e) => setCrawlConfig({...crawlConfig, includePatterns: e.target.value})}
+                          onChange={(e) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              includePatterns: e.target.value,
+                            })
+                          }
                           rows={3}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="exclude">Exclude Patterns (regex)</Label>
+                        <Label htmlFor="exclude">
+                          Exclude Patterns (regex)
+                        </Label>
                         <Textarea
                           id="exclude"
                           placeholder=".*\\.pdf$&#10;.*admin.*&#10;.*login.*"
                           value={crawlConfig.excludePatterns}
-                          onChange={(e) => setCrawlConfig({...crawlConfig, excludePatterns: e.target.value})}
+                          onChange={(e) =>
+                            setCrawlConfig({
+                              ...crawlConfig,
+                              excludePatterns: e.target.value,
+                            })
+                          }
                           rows={3}
                         />
                       </div>
@@ -327,7 +422,7 @@ export default function Index() {
                 </Tabs>
 
                 <div className="flex gap-4 mt-8">
-                  <Button 
+                  <Button
                     onClick={handleStartCrawl}
                     disabled={!crawlConfig.url || isRunning}
                     className="flex-1"
@@ -366,26 +461,57 @@ export default function Index() {
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   {[
-                    { type: 'html', url: 'example.com/products', status: 'completed' },
-                    { type: 'html', url: 'example.com/about', status: 'processing' },
-                    { type: 'pdf', url: 'example.com/docs/manual.pdf', status: 'queued' },
-                    { type: 'html', url: 'example.com/contact', status: 'completed' }
+                    {
+                      type: "html",
+                      url: "example.com/products",
+                      status: "completed",
+                    },
+                    {
+                      type: "html",
+                      url: "example.com/about",
+                      status: "processing",
+                    },
+                    {
+                      type: "pdf",
+                      url: "example.com/docs/manual.pdf",
+                      status: "queued",
+                    },
+                    {
+                      type: "html",
+                      url: "example.com/contact",
+                      status: "completed",
+                    },
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center space-x-3 p-3 rounded-lg bg-muted/30">
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 p-3 rounded-lg bg-muted/30"
+                    >
                       <div className="h-8 w-8 rounded bg-primary/10 flex items-center justify-center">
-                        {item.type === 'html' ? <Code className="h-4 w-4 text-primary" /> :
-                         item.type === 'pdf' ? <FileText className="h-4 w-4 text-primary" /> :
-                         <Image className="h-4 w-4 text-primary" />}
+                        {item.type === "html" ? (
+                          <Code className="h-4 w-4 text-primary" />
+                        ) : item.type === "pdf" ? (
+                          <FileText className="h-4 w-4 text-primary" />
+                        ) : (
+                          <Image className="h-4 w-4 text-primary" />
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{item.url}</p>
-                        <p className="text-xs text-muted-foreground capitalize">{item.status}</p>
+                        <p className="text-sm font-medium truncate">
+                          {item.url}
+                        </p>
+                        <p className="text-xs text-muted-foreground capitalize">
+                          {item.status}
+                        </p>
                       </div>
-                      <div className={`h-2 w-2 rounded-full ${
-                        item.status === 'completed' ? 'bg-green-500' :
-                        item.status === 'processing' ? 'bg-yellow-500 animate-pulse' :
-                        'bg-gray-400'
-                      }`} />
+                      <div
+                        className={`h-2 w-2 rounded-full ${
+                          item.status === "completed"
+                            ? "bg-green-500"
+                            : item.status === "processing"
+                              ? "bg-yellow-500 animate-pulse"
+                              : "bg-gray-400"
+                        }`}
+                      />
                     </div>
                   ))}
                 </div>
@@ -401,16 +527,23 @@ export default function Index() {
               </CardHeader>
               <CardContent className="space-y-3">
                 {[
-                  { domain: 'example.com', pages: 1243, time: '2 hours ago' },
-                  { domain: 'testsite.org', pages: 567, time: '1 day ago' },
-                  { domain: 'demo.app', pages: 89, time: '3 days ago' }
+                  { domain: "example.com", pages: 1243, time: "2 hours ago" },
+                  { domain: "testsite.org", pages: 567, time: "1 day ago" },
+                  { domain: "demo.app", pages: 89, time: "3 days ago" },
                 ].map((session, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 rounded-lg bg-muted/30"
+                  >
                     <div>
                       <p className="text-sm font-medium">{session.domain}</p>
-                      <p className="text-xs text-muted-foreground">{session.pages} pages</p>
+                      <p className="text-xs text-muted-foreground">
+                        {session.pages} pages
+                      </p>
                     </div>
-                    <p className="text-xs text-muted-foreground">{session.time}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {session.time}
+                    </p>
                   </div>
                 ))}
               </CardContent>

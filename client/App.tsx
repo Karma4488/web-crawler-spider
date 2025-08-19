@@ -28,11 +28,39 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout><Index /></Layout>} />
-          <Route path="/sessions" element={<Layout><Sessions /></Layout>} />
-          <Route path="/results" element={<Layout><Results /></Layout>} />
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <Index />
+              </Layout>
+            }
+          />
+          <Route
+            path="/sessions"
+            element={
+              <Layout>
+                <Sessions />
+              </Layout>
+            }
+          />
+          <Route
+            path="/results"
+            element={
+              <Layout>
+                <Results />
+              </Layout>
+            }
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<Layout><NotFound /></Layout>} />
+          <Route
+            path="*"
+            element={
+              <Layout>
+                <NotFound />
+              </Layout>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

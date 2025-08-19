@@ -1,15 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { 
-  Search, 
-  Download, 
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Search,
+  Download,
   Filter,
   ExternalLink,
   FileText,
@@ -22,8 +41,8 @@ import {
   TrendingUp,
   Globe,
   Database,
-  Zap
-} from 'lucide-react';
+  Zap,
+} from "lucide-react";
 
 interface CrawlResult {
   url: string;
@@ -63,14 +82,14 @@ interface CrawlSession {
 
 export default function Results() {
   const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('session');
-  
+  const sessionId = searchParams.get("session");
+
   const [session, setSession] = useState<CrawlSession | null>(null);
   const [results, setResults] = useState<CrawlResult[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [sortBy, setSortBy] = useState('crawledAt');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [sortBy, setSortBy] = useState("crawledAt");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(25);
 
@@ -89,44 +108,51 @@ export default function Results() {
         setResults(data.session.results);
       }
     } catch (error) {
-      console.error('Failed to fetch session:', error);
+      console.error("Failed to fetch session:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredResults = results.filter(result => {
-    const matchesSearch = !searchTerm || 
+  const filteredResults = results.filter((result) => {
+    const matchesSearch =
+      !searchTerm ||
       result.url.toLowerCase().includes(searchTerm.toLowerCase()) ||
       result.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       result.description?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesFilter = filterType === 'all' || 
-      (filterType === 'success' && !result.error) ||
-      (filterType === 'error' && result.error) ||
-      (filterType === 'html' && result.metadata?.contentType?.includes('html')) ||
-      (filterType === 'pdf' && result.url.toLowerCase().includes('.pdf')) ||
-      (filterType === 'images' && result.images?.length > 0);
+    const matchesFilter =
+      filterType === "all" ||
+      (filterType === "success" && !result.error) ||
+      (filterType === "error" && result.error) ||
+      (filterType === "html" &&
+        result.metadata?.contentType?.includes("html")) ||
+      (filterType === "pdf" && result.url.toLowerCase().includes(".pdf")) ||
+      (filterType === "images" && result.images?.length > 0);
 
     return matchesSearch && matchesFilter;
   });
 
   const sortedResults = [...filteredResults].sort((a, b) => {
     switch (sortBy) {
-      case 'responseTime':
+      case "responseTime":
         return b.responseTime - a.responseTime;
-      case 'depth':
+      case "depth":
         return (a.metadata?.depth || 0) - (b.metadata?.depth || 0);
-      case 'contentLength':
-        return (b.metadata?.contentLength || 0) - (a.metadata?.contentLength || 0);
+      case "contentLength":
+        return (
+          (b.metadata?.contentLength || 0) - (a.metadata?.contentLength || 0)
+        );
       default:
-        return new Date(b.crawledAt).getTime() - new Date(a.crawledAt).getTime();
+        return (
+          new Date(b.crawledAt).getTime() - new Date(a.crawledAt).getTime()
+        );
     }
   });
 
   const paginatedResults = sortedResults.slice(
     (currentPage - 1) * pageSize,
-    currentPage * pageSize
+    currentPage * pageSize,
   );
 
   const totalPages = Math.ceil(sortedResults.length / pageSize);
@@ -148,7 +174,9 @@ export default function Results() {
         <div className="text-center">
           <XCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">Session Not Found</h2>
-          <p className="text-muted-foreground">The requested crawl session could not be found.</p>
+          <p className="text-muted-foreground">
+            The requested crawl session could not be found.
+          </p>
         </div>
       </div>
     );
@@ -161,11 +189,19 @@ export default function Results() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Crawl Results</h1>
-              <p className="text-sm text-muted-foreground">Session: {sessionId}</p>
+              <h1 className="text-2xl font-bold text-foreground">
+                Crawl Results
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Session: {sessionId}
+              </p>
             </div>
             <div className="flex items-center space-x-4">
-              <Badge variant={session.status === 'completed' ? 'default' : 'secondary'}>
+              <Badge
+                variant={
+                  session.status === "completed" ? "default" : "secondary"
+                }
+              >
                 {session.status}
               </Badge>
               <Button variant="outline" size="sm">
@@ -184,8 +220,12 @@ export default function Results() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Pages Crawled</p>
-                  <p className="text-2xl font-bold text-foreground">{session.stats.totalPages}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Pages Crawled
+                  </p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {session.stats.totalPages}
+                  </p>
                 </div>
                 <Globe className="h-8 w-8 text-primary" />
               </div>
@@ -196,8 +236,12 @@ export default function Results() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Links Found</p>
-                  <p className="text-2xl font-bold text-foreground">{session.stats.totalLinks}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Links Found
+                  </p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {session.stats.totalLinks}
+                  </p>
                 </div>
                 <Link className="h-8 w-8 text-primary" />
               </div>
@@ -208,8 +252,12 @@ export default function Results() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Success Rate</p>
-                  <p className="text-2xl font-bold text-foreground">{session.stats.successRate.toFixed(1)}%</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Success Rate
+                  </p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {session.stats.successRate.toFixed(1)}%
+                  </p>
                 </div>
                 <TrendingUp className="h-8 w-8 text-primary" />
               </div>
@@ -220,8 +268,12 @@ export default function Results() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Avg Response</p>
-                  <p className="text-2xl font-bold text-foreground">{session.stats.avgResponseTime.toFixed(0)}ms</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Avg Response
+                  </p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {session.stats.avgResponseTime.toFixed(0)}ms
+                  </p>
                 </div>
                 <Zap className="h-8 w-8 text-primary" />
               </div>
@@ -242,7 +294,7 @@ export default function Results() {
                   className="pl-10"
                 />
               </div>
-              
+
               <Select value={filterType} onValueChange={setFilterType}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Filter by type" />
@@ -277,7 +329,8 @@ export default function Results() {
           <CardHeader>
             <CardTitle>Crawled Pages</CardTitle>
             <CardDescription>
-              Showing {paginatedResults.length} of {sortedResults.length} results
+              Showing {paginatedResults.length} of {sortedResults.length}{" "}
+              results
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0">
@@ -306,9 +359,9 @@ export default function Results() {
                     </TableCell>
                     <TableCell className="font-medium">
                       <div className="max-w-xs truncate">
-                        <a 
-                          href={result.url} 
-                          target="_blank" 
+                        <a
+                          href={result.url}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary hover:underline"
                         >
@@ -318,13 +371,11 @@ export default function Results() {
                     </TableCell>
                     <TableCell>
                       <div className="max-w-xs truncate">
-                        {result.title || 'No title'}
+                        {result.title || "No title"}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">
-                        {result.responseTime}ms
-                      </Badge>
+                      <Badge variant="outline">{result.responseTime}ms</Badge>
                     </TableCell>
                     <TableCell>
                       <Badge variant="secondary">
@@ -363,7 +414,7 @@ export default function Results() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
               >
                 Previous
@@ -371,7 +422,9 @@ export default function Results() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                }
                 disabled={currentPage === totalPages}
               >
                 Next

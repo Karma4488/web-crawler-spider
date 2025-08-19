@@ -1,21 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { 
-  Clock, 
-  Globe, 
-  BarChart3, 
-  ExternalLink, 
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Clock,
+  Globe,
+  BarChart3,
+  ExternalLink,
   Trash2,
   Play,
   Pause,
   CheckCircle,
   XCircle,
-  Activity
-} from 'lucide-react';
+  Activity,
+} from "lucide-react";
 
 interface CrawlSession {
   sessionId: string;
@@ -43,13 +56,13 @@ export default function Sessions() {
 
   const fetchSessions = async () => {
     try {
-      const response = await fetch('/api/crawl/sessions');
+      const response = await fetch("/api/crawl/sessions");
       const data = await response.json();
       if (data.success) {
         setSessions(data.sessions);
       }
     } catch (error) {
-      console.error('Failed to fetch sessions:', error);
+      console.error("Failed to fetch sessions:", error);
     } finally {
       setLoading(false);
     }
@@ -57,14 +70,14 @@ export default function Sessions() {
 
   const handleDeleteSession = async (sessionId: string) => {
     // In a real app, you'd have a delete endpoint
-    setSessions(sessions.filter(s => s.sessionId !== sessionId));
+    setSessions(sessions.filter((s) => s.sessionId !== sessionId));
   };
 
   const formatDuration = (milliseconds: number) => {
     const seconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
-    
+
     if (hours > 0) {
       return `${hours}h ${minutes % 60}m`;
     } else if (minutes > 0) {
@@ -80,13 +93,13 @@ export default function Sessions() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed':
+      case "completed":
         return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'running':
+      case "running":
         return <Activity className="h-4 w-4 text-blue-500 animate-pulse" />;
-      case 'stopped':
+      case "stopped":
         return <Pause className="h-4 w-4 text-yellow-500" />;
-      case 'error':
+      case "error":
         return <XCircle className="h-4 w-4 text-destructive" />;
       default:
         return <Clock className="h-4 w-4 text-muted-foreground" />;
@@ -95,16 +108,16 @@ export default function Sessions() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed':
-        return 'default';
-      case 'running':
-        return 'secondary';
-      case 'stopped':
-        return 'outline';
-      case 'error':
-        return 'destructive';
+      case "completed":
+        return "default";
+      case "running":
+        return "secondary";
+      case "stopped":
+        return "outline";
+      case "error":
+        return "destructive";
       default:
-        return 'outline';
+        return "outline";
     }
   };
 
@@ -126,8 +139,12 @@ export default function Sessions() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Crawl Sessions</h1>
-              <p className="text-sm text-muted-foreground">Manage and view your crawling sessions</p>
+              <h1 className="text-2xl font-bold text-foreground">
+                Crawl Sessions
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Manage and view your crawling sessions
+              </p>
             </div>
             <Link to="/">
               <Button>
@@ -146,8 +163,12 @@ export default function Sessions() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Sessions</p>
-                  <p className="text-2xl font-bold text-foreground">{sessions.length}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Total Sessions
+                  </p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {sessions.length}
+                  </p>
                 </div>
                 <BarChart3 className="h-8 w-8 text-primary" />
               </div>
@@ -158,9 +179,11 @@ export default function Sessions() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Completed</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Completed
+                  </p>
                   <p className="text-2xl font-bold text-foreground">
-                    {sessions.filter(s => s.status === 'completed').length}
+                    {sessions.filter((s) => s.status === "completed").length}
                   </p>
                 </div>
                 <CheckCircle className="h-8 w-8 text-green-500" />
@@ -172,7 +195,9 @@ export default function Sessions() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Pages</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Total Pages
+                  </p>
                   <p className="text-2xl font-bold text-foreground">
                     {sessions.reduce((sum, s) => sum + s.stats.totalPages, 0)}
                   </p>
@@ -196,7 +221,9 @@ export default function Sessions() {
               <div className="text-center py-12">
                 <Globe className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No sessions yet</h3>
-                <p className="text-muted-foreground mb-4">Start your first web crawl to see results here.</p>
+                <p className="text-muted-foreground mb-4">
+                  Start your first web crawl to see results here.
+                </p>
                 <Link to="/">
                   <Button>
                     <Play className="h-4 w-4 mr-2" />
@@ -224,16 +251,18 @@ export default function Sessions() {
                       <TableCell>
                         <div className="flex items-center space-x-2">
                           {getStatusIcon(session.status)}
-                          <Badge variant={getStatusColor(session.status) as any}>
+                          <Badge
+                            variant={getStatusColor(session.status) as any}
+                          >
                             {session.status}
                           </Badge>
                         </div>
                       </TableCell>
                       <TableCell className="font-medium">
                         <div className="max-w-xs truncate">
-                          <a 
-                            href={session.url} 
-                            target="_blank" 
+                          <a
+                            href={session.url}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="text-primary hover:underline"
                           >
@@ -262,8 +291,12 @@ export default function Sessions() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge 
-                          variant={session.stats.successRate > 90 ? "default" : "outline"}
+                        <Badge
+                          variant={
+                            session.stats.successRate > 90
+                              ? "default"
+                              : "outline"
+                          }
                         >
                           {session.stats.successRate.toFixed(1)}%
                         </Badge>
@@ -275,10 +308,12 @@ export default function Sessions() {
                               <ExternalLink className="h-4 w-4" />
                             </Button>
                           </Link>
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             size="sm"
-                            onClick={() => handleDeleteSession(session.sessionId)}
+                            onClick={() =>
+                              handleDeleteSession(session.sessionId)
+                            }
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>

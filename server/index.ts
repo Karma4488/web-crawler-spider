@@ -7,7 +7,7 @@ import {
   handleGetCrawlStatus,
   handleGetCrawlResults,
   handleGetAllSessions,
-  handleStopCrawl
+  handleStopCrawl,
 } from "./routes/crawl";
 
 export function createServer() {

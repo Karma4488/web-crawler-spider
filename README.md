@@ -12,6 +12,7 @@
 ## ✨ Features
 
 ### 🚀 **Advanced Web Crawling**
+
 - **Multi-threaded crawling** with configurable concurrency
 - **Intelligent depth control** and URL filtering
 - **Robots.txt compliance** with override options
@@ -19,6 +20,7 @@
 - **Rate limiting** and polite crawling delays
 
 ### 📊 **Powerful Analytics**
+
 - **Real-time monitoring** of crawl progress
 - **Comprehensive statistics** and performance metrics
 - **Visual data representation** with charts and graphs
@@ -26,6 +28,7 @@
 - **Session management** and history tracking
 
 ### 🎨 **Modern Interface**
+
 - **Dark theme** optimized for professionals
 - **Responsive design** for all devices
 - **Intuitive configuration** with visual controls
@@ -33,6 +36,7 @@
 - **Advanced filtering** and search capabilities
 
 ### 🔧 **Enterprise Ready**
+
 - **TypeScript throughout** for reliability
 - **Production-optimized** build system
 - **Docker support** for easy deployment
@@ -49,17 +53,20 @@
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/webspider-pro.git
    cd webspider-pro
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Start development server**
+
    ```bash
    pnpm dev
    ```
@@ -100,24 +107,27 @@ pnpm start
 ### Advanced Configuration
 
 #### Depth Control
+
 ```javascript
 // Crawl only 3 levels deep from the starting URL
-maxDepth: 3
+maxDepth: 3;
 ```
 
 #### URL Filtering
+
 ```javascript
 // Include only product pages
-includePatterns: ".*\\/product\\/.*"
+includePatterns: ".*\\/product\\/.*";
 
 // Exclude admin and login pages
-excludePatterns: ".*(admin|login).*"
+excludePatterns: ".*(admin|login).*";
 ```
 
 #### File Type Restrictions
+
 ```javascript
 // Crawl only HTML and PDF files
-fileTypes: ["html", "pdf"]
+fileTypes: ["html", "pdf"];
 ```
 
 ### API Integration
@@ -221,6 +231,7 @@ REDIS_URL="redis://localhost:6379"
 ### Crawl Management
 
 #### Start Crawl
+
 ```http
 POST /api/crawl/start
 Content-Type: application/json
@@ -242,11 +253,13 @@ Content-Type: application/json
 ```
 
 #### Get Results
+
 ```http
 GET /api/crawl/{sessionId}/results?page=1&limit=50
 ```
 
 #### Session Status
+
 ```http
 GET /api/crawl/{sessionId}/status
 ```
