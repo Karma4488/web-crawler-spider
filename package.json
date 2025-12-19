@@ -8,7 +8,7 @@
     ],
     "scripts": [
       "dist/server/**/*.js"
-    ]
+    ]https://github.com/Karma4488/web-crawler-spider
   },
   "scripts": {
     "dev": "vite",
